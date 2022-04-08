@@ -143,7 +143,7 @@ onEachFeature: function (feature, layer) {
       else if (feature.properties.SIZE == "112")  { id = 4; }
       return L.marker(latlng, {icon: L.divIcon({className: 'fas fa-house-user marker-color-' + (id + 1).toString() })});
   },
-    attribution: 'Housing Trust Data Provided by Center for Community Progress| Counties:  | Base Map &copy; CartoDB | Map Author: '
+    attribution: 'Housing Trust Data Provided by Center for Community Progress| Counties:  | Base Map &copy; CartoDB | Map Author: Meredith Maiken'
 }).addTo(mymap);
 
 colors = chroma.scale('Reds').colors(6);
