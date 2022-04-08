@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Community Land Trusts in the ARC Region (2020)</title>
+       <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.0/dist/leaflet.css"/>
+	     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css">
+       <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet'>
+
+<style>
+ 	html, body, #map { width: 100%; height: 100%; margin: 0; background: #fff; }
+
+  h1 {
+  position: absolute;
+  border-radius: 5px;
+  background: white;
+  margin-top: 0;
+  top: 10px;
+  left: 45px;
+  font-size: 2em;
+  font-family: "Raleway";
+  letter-spacing: .04em;
+  padding: 10px 15px;
+  border-radius: 3px;
+  z-index: 800;
+  opacity: 75%;
+}
+
+h2 {
+  font-family: "Raleway";
+  letter-spacing: .04em;
+  Opacity: 80%;
+}
+
+section {
+  position: absolute;
+  bottom: 0;
+  left: 10px;
+  width: 350px;
+  margin: 10px auto;
+  padding: 10px;
+  background: rgba(256, 256, 256);
+  border-radius: 4px;
+  z-index: 800;
+  opacity:80%;
+}
+
+p {
+  font-family: "Raleway";
+  font-size: .9em;
+  line-height: 1.5em;
+
+}
+
+  .legend {
+
+    font-family:'Raleway', sans-serif; letter-spacing:2px; line-height: 40px;
+    font-size: 16px; width: 350px; color: #333333; padding: 6px 8px; background:
+    white; background: rgba(255,255,255); box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    border-radius: 1px;
+}
+
+.legend i {
+    width: 20px;
+    height: 20px;
+    float: left;
+    margin-right: 8px;
+    opacity: 0.9;
+}
+
+.legend img {
+
+    width: 16px;
+    height: 16px;
+    margin-right: 3px;
+    float: left;
+}
+
+.legend p {
+
+    font-size: 14px;
+    line-height: 20px;
+    margin: 0;
+}
+
+  </style>
+    <link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet">
+  	<script src="https://unpkg.com/leaflet@1.7.0/dist/leaflet.js"></script>
+  	<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-ajax/2.1.0/leaflet.ajax.min.js"></script>
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+  	<script src="https://cdnjs.cloudflare.com/ajax/libs/chroma-js/1.3.4/chroma.min.js"></script>
+
+</head>
+
+<body>
+
+  <h1>Community Land Trusts and Poverty in the Appalachian Regional Commission (ARC) Region</h1>
+
+  <section>
+
+  <h2>Community Land Trusts</h2>
+
+  <p><a href="https://community-wealth.org/strategies/panel/clts/index.html">Community Land Trusts</a><p/>are affordable housing that provide perpetually affordable housing. Housing units are provided through alternative ownership. The homebuyer pays a mortgage and recives the deed to the house but not the land. They enter a 99 year lease for the land with the trust. If and when the homeowner sells the house they are under contract to sell it at an affordable price back to the trust and recieve a profit. The size of these land trusts are as of 2020.</p>
+
+  <p>Units include rented, owned and improved units.<p/>
+
+  </section>
+
+<div id="map"></div>
+
+<script>
+ var mymap = L.map('map', {
+     center: [38.3946,-82.1540],
+     zoom: 6,
+     maxZoom: 18,
+     minZoom: 4,
+     detectRetina: true
+ });
+
+ L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}').addTo(mymap);
+
+var landtrusts = null;
+
+var colors = chroma.scale(['#9AC1E2','#044781'])
+    .mode('lch').colors(6);
+
+for (i = 0; i < 6; i++) {
+    $('head').append($("<style> .marker-color-" + (i + 1).toString() + " { color: " + colors[i] + "; font-size: 15px; text-shadow: 0 0 3px #ffffff;} </style>"));
+}
+
+landtrusts = L.geoJson.ajax("Assets/landtrustpoints.geojson",{
+
+onEachFeature: function (feature, layer) {
+      layer.bindPopup(feature.properties.NAME);
+  },
+
+  pointToLayer: function(feature, latlng) {
+      var id = 0;
+      if (feature.properties.SIZE == "Still Organizing to Acquire Property") { id = 0; }
+      else if (feature.properties.SIZE == "13")  { id = 1; }
+      else if (feature.properties.SIZE == "16")  { id = 2; }
+      else if (feature.properties.SIZE == "62")  { id = 3; }
+      else if (feature.properties.SIZE == "112")  { id = 4; }
+      return L.marker(latlng, {icon: L.divIcon({className: 'fas fa-house-user marker-color-' + (id + 1).toString() })});
+  },
+    attribution: 'Housing Trust Data Provided by Center for Community Progress| Counties:  | Base Map &copy; CartoDB | Map Author: '
+}).addTo(mymap);
+
+colors = chroma.scale('Reds').colors(6);
+function setColor(density) {
+    var id = 0;
+    if (density > 106) { id = 6; }
+    else if (density > 21.76 && density <= 38.5) { id = 5; }
+    else if (density > 18.16 && density <= 21.75) { id = 4; }
+    else if (density > 15.96 && density <= 18.15) { id = 3; }
+    else if (density > 13.46 && density <= 15.95) { id = 2; }
+    else if (density > 5.65 &&  density <= 13.45) { id = 1; }
+    return colors[id];
+}
+
+function style(feature) {
+    return {
+        fillColor: setColor(feature.properties.povertyrate),
+        fillOpacity: 0.4,
+        weight: .5,
+        opacity: 1,
+        color: 'white',
+        dashArray: '4'
+    };
+}
+
+L.geoJson.ajax("Assets/arccountypovertyrate.geojson", {
+    style: style
+}).addTo(mymap);
+
+var legend = L.control({position: 'bottomright'});
+
+legend.onAdd = function () {
+
+  var div = L.DomUtil.create('div', 'legend');
+  div.innerHTML += '<b>Average Poverty Rate 2015-2019</b><br />';
+  div.innerHTML += '<i style="background: ' + colors[5] + '; opacity: 0.5"></i><p>21.9-38</p>';
+    div.innerHTML += '<i style="background: ' + colors[4] + '; opacity: 0.5"></i><p>18.2-21.8</p>';
+    div.innerHTML += '<i style="background: ' + colors[3] + '; opacity: 0.5"></i><p>16-18.1</p>';
+    div.innerHTML += '<i style="background: ' + colors[2] + '; opacity: 0.5"></i><p>13.5-15.9</p>';
+    div.innerHTML += '<i style="background: ' + colors[1] + '; opacity: 0.5"></i><p>5.7-13.4</p>';
+
+div.innerHTML += '<hr><b>Number of Units Managed<b><br />';
+    div.innerHTML += '<i class="fas fa-house-user marker-color-1"></i><p>Still Organizing to Acquire Property</p>';
+    div.innerHTML += '<i class="fas fa-house-user marker-color-2"></i><p>13</p>';
+    div.innerHTML += '<i class="fas fa-house-user marker-color-3"></i><p>16</p>';
+    div.innerHTML += '<i class="fas fa-house-user marker-color-4"></i><p>62</p>';
+    div.innerHTML += '<i class="fas fa-house-user marker-color-5"></i><p>112</p>';
+    return div;
+};
+
+legend.addTo(mymap);
+
+L.control.scale({position: 'topright'}).addTo(mymap);
+
+</script>
+</body>
+</html>

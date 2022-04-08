@@ -1,0 +1,13 @@
+{
+"type": "FeatureCollection",
+"name": "landtrustpoints",
+"features": [
+{ "type": "Feature", "properties": { "NAME": "Asheville Buncombe Community Land Trust", "SIZE": "Still Organizing to Acquire Property", "STATE": "NC", "CITY": "Asheville", "YEAR INCOR": "2019", "LAT": "35.62664002", "LONG": "-82.55265764" }, "geometry": { "type": "Point", "coordinates": [ -82.5526576, 35.62664 ] } },
+{ "type": "Feature", "properties": { "NAME": "Sterline Land Trust", "SIZE": "62", "STATE": "SC", "CITY": "Greenville", "YEAR INCOR": "2018", "LAT": "34.83876257", "LONG": "-82.41561399" }, "geometry": { "type": "Point", "coordinates": [ -82.415614, 34.8387626 ] } },
+{ "type": "Feature", "properties": { "NAME": "Woodland Community Land Trust", "SIZE": "16", "STATE": "TN", "CITY": "Clairfield", "YEAR INCOR": "1977", "LAT": "36.56075648", "LONG": "-83.98979841" }, "geometry": { "type": "Point", "coordinates": [ -83.9897984, 36.5607565 ] } },
+{ "type": "Feature", "properties": { "NAME": "City of Bridges CLT", "SIZE": "13", "STATE": "PA", "CITY": "Pittsburgh", "YEAR INCOR": "2020", "LAT": "40.47309486", "LONG": "-79.963916" }, "geometry": { "type": "Point", "coordinates": [ -79.963916, 40.4730949 ] } },
+{ "type": "Feature", "properties": { "NAME": "State College Community Land Trust", "SIZE": "112", "STATE": "PA", "CITY": "State College", "YEAR INCOR": "1996", "LAT": "40.78413522", "LONG": "-77.84756372" }, "geometry": { "type": "Point", "coordinates": [ -77.8475637, 40.7841352 ] } },
+{ "type": "Feature", "properties": { "NAME": "Centre County and Housing Land Trust", "SIZE": "16", "STATE": "PA", "CITY": "Belafonte", "YEAR INCOR": "2007", "LAT": "40.91544625", "LONG": "-77.7526291" }, "geometry": { "type": "Point", "coordinates": [ -77.7526291, 40.9154463 ] } },
+{ "type": "Feature", "properties": { "NAME": "Broome Community Land Trust", "SIZE": "Still Organizing to Acquire Property", "STATE": "NY", "CITY": "Binghamton", "YEAR INCOR": "2020", "LAT": "42.12790983", "LONG": "-75.91733769" }, "geometry": { "type": "Point", "coordinates": [ -75.9173377, 42.1279098 ] } }
+]
+}
